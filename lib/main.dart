@@ -56,7 +56,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Login',
+                labelText: 'Логин',
               ),
             ),
           ),
@@ -70,7 +70,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Password',
+                labelText: 'Пароль',
               ),
             ),
           ),
@@ -81,10 +81,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               onPressed: () {
                 loginAsync(loginStr, passStr);
 
-                final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
+                final snackBar = SnackBar(content: Text('Вход прошел успешно'), backgroundColor: Color.fromARGB(255, 61, 194, 54));
                 Scaffold.of(context).showSnackBar(snackBar);
               },
-              child: Text('Submit'),
+              child: Text('Вход'),
             ),
           ),
         ],
