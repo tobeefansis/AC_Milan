@@ -1,87 +1,94 @@
-import 'package:http/http.dart' as http;
+// Flutter code sample for Form
+
+// This example shows a [Form] with one [TextFormField] to enter an email
+// address and a [RaisedButton] to submit the form. A [GlobalKey] is used here
+// to identify the [Form] and validate input.
+//
+// ![](https://flutter.github.io/assets-for-api-docs/assets/widgets/form.png)
+
 import 'package:flutter/material.dart';
+import 'Action.dart';
+
 void main() => runApp(MyApp());
 
+/// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  static const String _title = 'Flutter Code Sample';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter asdDemo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.deepOrange,
+      title: _title,
+      home: Scaffold(
+        appBar: AppBar(title: const Text(_title)),
+        body: MyStatefulWidget(),
       ),
-      home: MyHomePage(title: 'Title)'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  final _formKey = GlobalKey<FormState>();
 
-var response;
-  void _incrementCounter() {
-    setState(() {
-     response =  http.post('http://acmilan-bo-integ.netcosports.com/login', body: {'username':'admin','password':'admin'});
-    print(response);
-    });
-  }
+  String passStr;
 
+  String loginStr;
   @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
-      appBar: AppBar(
-     
-        title: Text(widget.title),
-      ),
-      body: Center(
-        
-        child: Column(
-        
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'количество тыков:',
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: TextFormField(
+              onChanged: (text) {
+                loginStr = text;
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Login',
+              ),
             ),
-            Text(
-              response.toString(),
-              style: Theme.of(context).textTheme.display1,
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: TextField(
+              onChanged: (text) {
+                passStr = text;
+              },
+              obscureText: true,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+              ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+            child: RaisedButton(
+              onPressed: () {
+                loginAsync(loginStr, passStr);
+
+                final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
+                Scaffold.of(context).showSnackBar(snackBar);
+              },
+              child: Text('Submit'),
+            ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.airplay),
-      ), 
     );
   }
 }
