@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'Config.dart';
 import 'DatePicker.dart';
+import 'EditMatch.dart';
 import 'Match.dart';
 
 class MatchList extends StatefulWidget {
@@ -229,51 +231,64 @@ class _MatchListState extends State<MatchList> {
   //   )
   Widget build(BuildContext context) {
     return MaterialApp(
-        themeMode: ThemeMode.dark,
+        darkTheme: Config.getTheme(),
         home: Scaffold(
-            backgroundColor: Colors.grey[350],
             floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.blue[600],
               onPressed: () {
                 // Add your onPressed code here!
               },
               child: Icon(Icons.add),
-              backgroundColor: Colors.red,
             ),
             appBar: AppBar(
-              backgroundColor: Colors.red,
               title: Text("Management Console"),
               actions: <Widget>[
-                Material(
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Ink(
-                      decoration: const ShapeDecoration(
-                        color: Colors.white,
-                        shape: CircleBorder(),
-                      ),
-                      child: IconButton(
-                        icon: Icon(Icons.search),
-                        color: Colors.red[900],
-                        onPressed: () {
-                          //   _showPushDialog();
-                        },
-                      ),
-                    ),
-                  ),
-                )
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    //   _showPushDialog();
+                  },
+                ),
               ],
             ),
             body: ListView(
                 children: matchs
                     .map((Match m) => Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 5.0, left: 12.0, right: 12.0),
-                          child: new Card(
+                        padding: const EdgeInsets.only(
+                            bottom: 20.0, left: 12.0, right: 12.0),
+                        child: RaisedButton(
+                          onPressed: () {},
+                          child: new PopupMenuButton<int>(
+                            offset: Offset(0,-10),
+                              itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                      value: 1,
+                                      child: Text("Edit"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 2,
+                                      child: Text("Results"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 3,
+                                      child: Text("Delete"),
+                                    ),
+                                  ],
+                              initialValue: 0,
+                              onCanceled: () {
+                                print("You have canceled the menu.");
+                              },
+                              onSelected: (value) {
+                                print("value:$value");
+                                switch (value) {
+                                  case 1:
+                                      Navigator.push(context,MaterialPageRoute(builder: (context)=>EditMatch()));
+                                    break;
+                                  default:
+                                } 
+                              },
+                              captureInheritedThemes: false,
                               child: Row(
-                            children: <Widget>[
-                              new Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -282,20 +297,16 @@ class _MatchListState extends State<MatchList> {
                                       alignment: Alignment.topLeft,
                                       child: new Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 10.0, bottom: 8.0),
+                                            top: 15.0, bottom: 15.0),
                                         child: Row(
                                           children: <Widget>[
                                             Text("Milan - SPAL",
                                                 style: new TextStyle(
-                                                    color: new Color.fromARGB(
-                                                        255, 117, 117, 117),
                                                     fontSize: 18.0,
                                                     fontWeight:
                                                         FontWeight.bold)),
                                             Text(" Fixture",
                                                 style: new TextStyle(
-                                                    color: new Color.fromARGB(
-                                                        255, 117, 117, 117),
                                                     fontSize: 11.0,
                                                     fontWeight:
                                                         FontWeight.bold))
@@ -304,93 +315,27 @@ class _MatchListState extends State<MatchList> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10.0, top: 10.0, bottom: 8.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text("11/23/2019 - 22:50",
-                                            style: new TextStyle(
-                                                color: new Color.fromARGB(
-                                                    255, 117, 117, 117),
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400)),
-                                        Text(" - 11/24/2019 - 00:50",
-                                            style: new TextStyle(
-                                                color: new Color.fromARGB(
-                                                    255, 117, 117, 117),
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w400))
-                                      ],
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10.0, top: 10.0, bottom: 8.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text("11/23/2019 - 22:50",
+                                              style: new TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w400)),
+                                          Text("11/24/2019 - 00:50",
+                                              style: new TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w400))
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  Text(testData)
                                 ],
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: ButtonBar(
-                                  children: <Widget>[
-                                    Material(
-                                      color: Colors.white,
-                                      child: Center(
-                                        child: Ink(
-                                          decoration: const ShapeDecoration(
-                                            color: Colors.red,
-                                            shape: CircleBorder(),
-                                          ),
-                                          child: IconButton(
-                                            icon: Icon(Icons.edit),
-                                            color: Colors.white,
-                                            onPressed: () {
-                                               Navigator.push(context,MaterialPageRoute(builder: (context)=>DateTimePicker(testData,testData),settings: RouteSettings())); 
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Material(
-                                      color: Colors.white,
-                                      child: Center(
-                                        child: Ink(
-                                          decoration: const ShapeDecoration(
-                                            color: Colors.red,
-                                            shape: CircleBorder(),
-                                          ),
-                                          child: IconButton(
-                                            icon: Icon(Icons.insert_chart),
-                                            color: Colors.white,
-                                            onPressed: () {
-                                              //  _neverSatisfied(context);
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Material(
-                                      color: Colors.white,
-                                      child: Center(
-                                        child: Ink(
-                                          decoration: const ShapeDecoration(
-                                            color: Colors.red,
-                                            shape: CircleBorder(),
-                                          ),
-                                          child: IconButton(
-                                            icon: Icon(Icons.delete),
-                                            color: Colors.white,
-                                            onPressed: () {
-                                              showEditMenu(context);
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          )),
-                        ))
+                              )),
+                        )))
                     .toList())));
   }
 }
