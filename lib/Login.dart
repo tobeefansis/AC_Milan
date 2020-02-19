@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_test_projeasct/MatchList.dart';
 import 'Action.dart';
+import 'Config.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -14,12 +15,11 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      darkTheme: Config.getTheme(),
         title: 'Welcome to Flutter',
         home: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text("Log in"),
-            backgroundColor: Colors.red,
           ),
           body: Container(
             child: Form(
