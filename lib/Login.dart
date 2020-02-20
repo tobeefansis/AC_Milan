@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_test_projeasct/MatchList.dart';
 import 'Action.dart';
-import 'Config.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -14,73 +13,70 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      darkTheme: Config.getTheme(),
-        title: 'Welcome to Flutter',
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("Log in"),
-          ),
-          body: Container(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Log in"),
+      ),
+      body: Container(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                child: TextFormField(
+                  onChanged: (text) {
+                    loginStr = text;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Логин',
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                child: TextField(
+                  onChanged: (text) {
+                    passStr = text;
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Пароль',
+                  ),
+                ),
+              ),
+              ButtonBar(
+                alignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 5.0),
-                    child: TextFormField(
-                      onChanged: (text) {
-                        loginStr = text;
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Логин',
-                      ),
-                    ),
+                  RaisedButton(
+                    onPressed: () async {
+                      await Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MatchList()));
+                    },
+                    child: Text('Отмена'),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 5.0),
-                    child: TextField(
-                      onChanged: (text) {
-                        passStr = text;
-                      },
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Пароль',
-                      ),
-                    ),
-                  ),
-                  ButtonBar(
-                    alignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>MatchList())); 
-                        },
-                        child: Text('Отмена'),
-                      ),
-                      RaisedButton(
-                        onPressed: () {
-                          loginAsync(loginStr, passStr);
+                  RaisedButton(
+                    onPressed: () {
+                      loginAsync(loginStr, passStr);
 
-                          final snackBar = SnackBar(
-                              content: Text('Вход прошел успешно'),
-                              backgroundColor:
-                                  Color.fromARGB(255, 61, 194, 54));
-                          Scaffold.of(context).showSnackBar(snackBar);
-                        },
-                        child: Text('Войти'),
-                      ),
-                    ],
+                      final snackBar = SnackBar(
+                          content: Text('Вход прошел успешно'),
+                          backgroundColor: Color.fromARGB(255, 61, 194, 54));
+                      Scaffold.of(context).showSnackBar(snackBar);
+                    },
+                    child: Text('Войти'),
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
