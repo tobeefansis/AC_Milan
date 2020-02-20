@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:my_test_projeasct/Login.dart';
+import 'package:my_test_projeasct/MatchList.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,9 +8,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to рFlutter',
+      themeMode: ThemeMode.system,
+      darkTheme: ThemeData.dark(),
+      theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: MatchList(),
     );
   }
 }
