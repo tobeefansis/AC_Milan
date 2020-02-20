@@ -25,14 +25,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('DateTime Picker'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Container(
-          child: Column(
+    return Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -67,12 +60,12 @@ class _DateTimePickerState extends State<DateTimePicker> {
                                 Icon(
                                   Icons.date_range,
                                   size: 18.0,
-                                  color: Colors.teal,
+                                  
                                 ),
                                 Text(
                                   " $_date",
                                   style: TextStyle(
-                                      color: Colors.teal,
+                                      
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18.0),
                                 ),
@@ -84,17 +77,16 @@ class _DateTimePickerState extends State<DateTimePicker> {
                       Text(
                         "  Change",
                         style: TextStyle(
-                            color: Colors.teal,
+                            
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0),
                       ),
                     ],
                   ),
                 ),
-                color: Colors.white,
               ),
               SizedBox(
-                height: 20.0,
+                height: 10.0  ,
               ),
               RaisedButton(
                 shape: RoundedRectangleBorder(
@@ -126,12 +118,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
                                 Icon(
                                   Icons.access_time,
                                   size: 18.0,
-                                  color: Colors.teal,
                                 ),
                                 Text(
                                   " $_time",
                                   style: TextStyle(
-                                      color: Colors.teal,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18.0),
                                 ),
@@ -143,19 +133,14 @@ class _DateTimePickerState extends State<DateTimePicker> {
                       Text(
                         "  Change",
                         style: TextStyle(
-                            color: Colors.teal,
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0),
                       ),
                     ],
                   ),
                 ),
-                color: Colors.white,
               )
             ],
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
