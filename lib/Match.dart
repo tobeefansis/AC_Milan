@@ -1,9 +1,11 @@
+import 'Players.dart';
+
 class Match {
   String status;
   String name;
   String dateBeginning;
   String dateEnd;
-  List<Player> players;
+  List<PlayerinMatch> players;
   Match({
     this.status,
     this.name,
@@ -13,11 +15,11 @@ class Match {
   });
 }
 
-class Player {
-  String name;
+class PlayerinMatch {
+  Player player;
   int voites;
-  Player({
-    this.name,
+  PlayerinMatch({
+    this.player,
     this.voites,
   });
 }
