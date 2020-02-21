@@ -1,16 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_test_projeasct/PlayerCheckList.dart';
-
 import 'Action.dart';
 import 'DatePicker.dart';
+import 'Players.dart';
 import 'SelectPlayer.dart';
+import 'Match.dart';
 
 class EditMatch extends StatefulWidget {
   EditMatch({Key key}) : super(key: key);
 
   @override
   _EditMatchState createState() => _EditMatchState();
+}
+
+List<PopupMenuEntry<int>> createMenu(List<Match> matchs) {
+  var list = List<PopupMenuEntry<int>>();
+  for (Match item in matchs) {
+    list.add(
+      PopupMenuItem(
+        child: Container(child: Text(item.name), ),
+      ),
+    );
+  }
+
+  return list;
 }
 
 class _EditMatchState extends State<EditMatch> {
@@ -20,7 +33,7 @@ class _EditMatchState extends State<EditMatch> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
         isExtended: true,
-        icon: Icon(Icons.navigate_next),
+        icon: Icon(Icons.arrow_forward),
         label: Text('Next'),
         backgroundColor: Colors.blue[600],
         onPressed: () {
@@ -41,6 +54,39 @@ class _EditMatchState extends State<EditMatch> {
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: Column(
                 children: <Widget>[
+                  RaisedButton(
+                    onPressed: () {},
+                    child: new PopupMenuButton<int>(
+                      offset: Offset(0, -10),
+                      itemBuilder: (context) {
+                        return createMenu(Match.getMatch());
+                      },
+                      initialValue: -1,
+                      onCanceled: () {
+                        print("You have canceled the menu.");
+                      },
+                      onSelected: (value) async {},
+                      captureInheritedThemes: false,
+                      child: Row(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Milan - SPAL",
+                              style: new TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(Icons.arrow_downward)))
+                        ],
+                      ),
+                    ),
+                  ),
                   Text(
                     "Start",
                     style:
@@ -63,29 +109,6 @@ class _EditMatchState extends State<EditMatch> {
                     ),
                     child: DateTimePicker("asd", "asd"),
                   ),
-                  //  Container(child:  ListView(
-                  //     // children: <Widget>[
-                  //     //   Row(
-                  //     //     children: <Widget>[
-                  //     //       Transform.scale(
-                  //     //         scale: 1.4,
-                  //     //         child: Checkbox(
-                  //     //           activeColor: Colors.blue[600],
-                  //     //           onChanged: (bool t) {},
-                  //     //           value: false,
-                  //     //         ),
-                  //     //       ),
-                  //     //       Expanded(
-                  //     //         child: Text(
-                  //     //           "p",
-                  //     //           style: TextStyle(
-                  //     //               fontWeight: FontWeight.bold, fontSize: 18.0),
-                  //     //         ),
-                  //     //       )
-                  //     //     ],
-                  //     //   ),
-                  //     // ],
-                  //   ),)
                 ],
               ),
             ),
