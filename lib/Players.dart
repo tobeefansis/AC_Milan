@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Player {
   String name;
@@ -27,34 +25,5 @@ class PlayerList {
     Player(name: "name 14"),
     Player(name: "name 15"),
   ];
-  static List<Widget> getPlayers(List<Player> players) {
-    return players
-        .map(
-          (Player p) => Padding(
-            padding:
-                const EdgeInsets.only(bottom: 20.0, left: 12.0, right: 12.0),
-            child: Row(
-              children: <Widget>[
-                Transform.scale(
-                  scale: 1.4,
-                  child: Checkbox(
-                    activeColor: Colors.blue[600],
-                    onChanged: (bool t) {},
-                    value: false,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    p.name,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                  ),
-                )
-              ],
-            ),
-          ),
-        )
-        .toList();
-    //
-  }
+ 
 }
