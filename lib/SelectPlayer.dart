@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_test_projeasct/PlayerCheckList.dart';
+import 'package:my_test_projeasct/Players.dart';
 
 class SelecctPlayer extends StatefulWidget {
   SelecctPlayer({Key key}) : super(key: key);
@@ -14,8 +15,8 @@ class _SelecctPlayerState extends State<SelecctPlayer> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         isExtended: true,
-        icon: Icon(Icons.navigate_next),
-        label: Text('Next'),
+        icon: Icon(Icons.check),
+        label: Text('Create'),
         backgroundColor: Colors.blue[600],
         onPressed: () {
           //   Navigator.of(context).push(createRoute(SelecctPlayer()));
@@ -26,7 +27,14 @@ class _SelecctPlayerState extends State<SelecctPlayer> {
       appBar: AppBar(
         title: Text("Edit"),
       ),
-      body: PlayerChackList(),
+      body: PlayerChackList(
+        lines: PlayerList.players
+            .map((Player p) => Line(
+                  text: p.name,
+                  checked: false,
+                ))
+            .toList(),
+      ),
     );
   }
 }
