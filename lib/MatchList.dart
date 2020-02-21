@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_test_projeasct/Players.dart';
+import 'package:my_test_projeasct/Result.dart';
 import 'Action.dart';
 import 'EditMatch.dart';
 import 'Match.dart';
+
 class MatchList extends StatefulWidget {
   @override
   _MatchListState createState() => _MatchListState();
@@ -221,30 +223,24 @@ class _MatchListState extends State<MatchList> {
       },
     );
   }
- 
+
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               child: Text('Drawer Header'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+              decoration: BoxDecoration(color: Colors.blue[600]),
             ),
             ListTile(
-              title: Text('Item 1'),
+              title: CircleAvatar(child: Text("ok")),
               onTap: () {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -268,7 +264,7 @@ class _MatchListState extends State<MatchList> {
       ),
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Management Console"),
+        title: Text("Management Console "),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -310,8 +306,14 @@ class _MatchListState extends State<MatchList> {
                       print("value:$value");
                       switch (value) {
                         case 1:
-                         Navigator.of(context).push(createRoute( EditMatch()));
-                          
+                          Navigator.of(context).push(createRoute(EditMatch()));
+
+                          break;
+                        case 2:
+                            Navigator.of(context).push(createRoute(Result()));
+                          break;
+                        case 3:
+                          showEditMenu(context);
                           break;
                         default:
                       }
