@@ -14,6 +14,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
       home: MatchList(),
+      routes: <String, WidgetBuilder> {
+      '/home': (BuildContext context) => MatchList(),
+    },
     );
   }
 }
