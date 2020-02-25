@@ -37,7 +37,6 @@ class _PlayerChackListState extends State<PlayerChackList> {
                     activeColor: Colors.blue[600],
                     onChanged: (bool t) {
                       l.checked = t;
-                      print("ch $t");
                       setState(() {
                         
                       });
@@ -64,10 +63,12 @@ class _PlayerChackListState extends State<PlayerChackList> {
 class Line {
   bool checked;
   String text;
+  String id;
   void change(bool t){
     checked =t;
   }
   Line({
+    this.id,
     this.checked,
     this.text,
   });
