@@ -10,8 +10,8 @@ import 'Players.dart';
 import 'SelectPlayer.dart';
 
 class EditMatch extends StatefulWidget {
-  Match math;
-  List<MatchPopupItem> matchPopupItem;
+ final Match math;
+final  List<MatchPopupItem> matchPopupItem;
   EditMatch({
     Key key,
     this.math,
