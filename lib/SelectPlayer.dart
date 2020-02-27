@@ -8,10 +8,10 @@ import 'package:my_test_projeasct/Players.dart';
 import 'Action.dart';
 
 class SelecctPlayer extends StatefulWidget {
-  List<Player> players;
-  Match math;
-  String start;
-  String end;
+ final List<Player> players;
+final  Match math;
+final  String start;
+final  String end;
   SelecctPlayer(this.players, this.math, this.start, this.end, {Key key})
       : super(key: key);
 
@@ -68,7 +68,7 @@ class _SelecctPlayerState extends State<SelecctPlayer> {
       floatingActionButton: FloatingActionButton.extended(
         isExtended: true,
         icon: Icon(Icons.check),
-        label: Text('Create'),
+        label: Text('Publish'),
         backgroundColor: Colors.blue[600],
         onPressed: () {
           String t = toJson();
