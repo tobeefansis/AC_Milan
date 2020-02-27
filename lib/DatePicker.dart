@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class DateTimePicker extends StatefulWidget {
-  String _date;
-  String _time;
-  Function(String date, String time) onSelect;
-  DateTimePicker(String date, String time, this.onSelect) {
-    this._date = date;
-    this._time = time;
-  }
+ final String _date;
+ final String _time;
+ final Function(String date, String time) onSelect;
+  DateTimePicker(this._date, this._time, this.onSelect);
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
 }
