@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_test_projeasct/Search.dart';
 import 'CreateMatch.dart';
 import 'Result.dart';
 import 'Action.dart';
@@ -11,34 +14,14 @@ class MatchList extends StatefulWidget {
   _MatchListState createState() => _MatchListState();
 }
 
-class TwitterSpinnerPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    double radius = 25;
-    double width = 8;
-
-    Paint innerCirclePaint = Paint()
-      ..color = Color(0xFF1da1f2).withOpacity(0.3)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = width;
-
-    Offset center = new Offset(size.width / 2, size.height / 2);
-    canvas.drawCircle(center, radius, innerCirclePaint);
-  }
-
-  @override
-  bool shouldRepaint(TwitterSpinnerPainter oldDelegate) {
-    //Will be changed later
-    return false;
-  }
-}
-
 class _MatchListState extends State<MatchList> {
   List<Match> matchs = [];
 
   @override
   void initState() {
     update();
+    Timer.periodic(Duration(milliseconds: 500), (Timer timer) => {update()});
+
     super.initState();
   }
 
@@ -74,23 +57,25 @@ class _MatchListState extends State<MatchList> {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               child: Text('Drawer Header'),
               decoration: BoxDecoration(color: Colors.blue[600]),
             ),
             ListTile(
-              title: CircleAvatar(child: Text("ok")),
+              title: Text('Man of the Match'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
+                Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('Fotofan'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Exit'),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -102,12 +87,22 @@ class _MatchListState extends State<MatchList> {
         backgroundColor: Colors.blue[600],
         onPressed: () {
           update();
-
-          Navigator.of(context).push(
-            createRoute(
-              CreateMatch(),
-            ),
-          );
+          getMatches().then((String st) {
+            getAsync()
+                .then((List<Match> m) {
+                  var temp = MatchPopupItem.fromJsonToList(st);
+                  Navigator.of(context).push(
+                    createRoute(
+                      CreateMatch(
+                        matchPopupItem: temp,
+                        math: m.first,
+                      ),
+                    ),
+                  );
+                })
+                .then((List<Match> m) {})
+                .catchError((exception) => print('DOH!'));
+          });
         },
         child: Icon(Icons.add),
       ),
@@ -118,13 +113,14 @@ class _MatchListState extends State<MatchList> {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              //   _showPushDialog();
+              Navigator.of(context).push(createRoute(Search()));
+              
             },
           ),
           IconButton(
             icon: Icon(Icons.update),
             onPressed: () {
-              update();
+              loginAsync("admin", "admin");
             },
           ),
         ],
@@ -162,7 +158,7 @@ class _MatchListState extends State<MatchList> {
                           var temp = MatchPopupItem.fromJsonToList(st);
                           Navigator.of(context).push(
                             createRoute(
-                              CreateMatch( matchPopupItem: temp),
+                              EditMatch(math: m, matchPopupItem: temp),
                             ),
                           );
                         });
