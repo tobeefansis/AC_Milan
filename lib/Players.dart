@@ -90,6 +90,3 @@ class Player {
   static Player fromJson(String source) => fromMap(json.decode(source));
 }
 
-class PlayerList {
-  static List<Player> getPlayer() {}
-}
