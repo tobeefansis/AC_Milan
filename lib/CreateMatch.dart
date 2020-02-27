@@ -1,3 +1,4 @@
+import 'CreateSelectPlayer.dart';
 import 'EditMatch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,14 @@ import 'Action.dart';
 import 'DatePicker.dart';
 import 'Match.dart';
 import 'Players.dart';
-import 'SelectPlayer.dart';
 
 class CreateMatch extends StatefulWidget {
-
-  List<MatchPopupItem> matchPopupItem;
+final  Match math;
+final  List<MatchPopupItem> matchPopupItem;
   CreateMatch({
     Key key,
     this.matchPopupItem,
+    this.math,
   }) : super(key: key);
 
   @override
@@ -30,13 +31,14 @@ class _CreateMatchState extends State<CreateMatch> {
   String endTime;
   @override
   void initState() {
-    math = Match();
     matchPopupItem = widget.matchPopupItem;
-    selectMatch = getMatchPopupItem(math.match);
-    startDate = getDate(math.dateBeginning);
-    startTime = getTime(math.dateBeginning);
-    endDate = getDate(math.dateEnd);
-    endTime = getTime(math.dateEnd);
+    math = widget.math;
+    selectMatch = matchPopupItem.first;
+
+    startDate = getDate(DateTime.now().toString());
+    startTime = getTime(DateTime.now().toString());
+    endDate = getDate(DateTime.now().toString());
+    endTime = getTime(DateTime.now().toString());
     super.initState();
   }
 
@@ -90,7 +92,7 @@ class _CreateMatchState extends State<CreateMatch> {
           getPlayers(selectMatch.id).then((String str) {
             var temp = Player.fromJsonToList(str);
             math.matchid = selectMatch.id;
-            Navigator.of(context).push(createRoute(SelecctPlayer(
+            Navigator.of(context).push(createRoute(CreateSelecctPlayer(
                 temp,
                 math,
                 "${startDate}T$startTime:00.000Z",
