@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-
+import 'EditMatch.dart';
 
 class Match {
   int id;
@@ -17,6 +17,23 @@ class Match {
   String status;
   int totalVotes;
   List<PlayerinMatch> players;
+
+  static Match fromPopup(MatchPopupItem item) {
+    Match m = Match(
+      awayTeam: item.awayTeam,
+      id: int.parse(item.id.substring(1)),
+      dateBeginning: item.date,
+      dateEnd: item.date,
+      competitionid: item.competitionid,
+      homeTeam: item.homeTeam,
+      competitionId: item.competitionId,
+      homeTeamName: item.homeTeamName,
+      awayTeamName: item.awayTeamName,
+      status: item.status,
+      
+    );
+    return m;
+  }
 
   Match({
     this.status,
