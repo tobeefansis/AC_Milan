@@ -6,7 +6,9 @@ import 'EditMatch.dart';
 import 'Match.dart';
 
 class Search extends StatefulWidget {
-  Search({Key key}) : super(key: key);
+  Search({
+    Key key,
+  }) : super(key: key);
 
   @override
   _SearchState createState() => _SearchState();
@@ -14,9 +16,10 @@ class Search extends StatefulWidget {
 
 class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
-
-  const MyCustomAppBar({
+  final Function onChanged;
+  MyCustomAppBar({
     Key key,
+    this.onChanged,
     @required this.height,
   }) : super(key: key);
 
@@ -36,6 +39,7 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: TextFormField(
                   onChanged: (text) {
                     // loginStr = text;
+                    onChanged(text);
                   },
                   decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -68,6 +72,8 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 class _SearchState extends State<Search> {
   List<Match> matchs = [];
 
+  String searchSrt = "";
+
   @override
   void initState() {
     update();
@@ -93,8 +99,9 @@ class _SearchState extends State<Search> {
               child: Text('Delete'),
               onPressed: () {
                 deleteAsync(m.id);
-                update();
                 Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                
               },
             ),
           ],
@@ -107,105 +114,114 @@ class _SearchState extends State<Search> {
     return Container(
       child: Scaffold(
         appBar: MyCustomAppBar(
+          onChanged: (String text) {
+            searchSrt = text;
+            setState(() {});
+          },
           height: 50,
         ),
         body: ListView(
           children: matchs.map(
             (Match m) {
-              return Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 20.0, left: 12.0, right: 12.0),
-                child: RaisedButton(
-                  onPressed: () {},
-                  child: new PopupMenuButton<int>(
-                    offset: Offset(0, -10),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: 1,
-                        child: Text("Edit"),
-                      ),
-                      PopupMenuItem(
-                        value: 2,
-                        child: Text("Results"),
-                      ),
-                      PopupMenuItem(
-                        value: 3,
-                        child: Text("Delete"),
-                      ),
-                    ],
-                    initialValue: 0,
-                    onCanceled: () {},
-                    onSelected: (value) async {
-                      switch (value) {
-                        case 1:
-                          getMatches().then((String st) {
-                            var temp = MatchPopupItem.fromJsonToList(st);
-                            Navigator.of(context).push(
-                              createRoute(
-                                EditMatch(math: m, matchPopupItem: temp),
-                              ),
-                            );
-                          });
+              if ("${m.homeTeam} - ${m.awayTeam}"
+                  .contains(new RegExp(searchSrt, caseSensitive: false))) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: 20.0, left: 12.0, right: 12.0),
+                  child: RaisedButton(
+                    onPressed: () {},
+                    child: new PopupMenuButton<int>(
+                      offset: Offset(0, -10),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 1,
+                          child: Text("Edit"),
+                        ),
+                        PopupMenuItem(
+                          value: 2,
+                          child: Text("Results"),
+                        ),
+                        PopupMenuItem(
+                          value: 3,
+                          child: Text("Delete"),
+                        ),
+                      ],
+                      initialValue: 0,
+                      onCanceled: () {},
+                      onSelected: (value) async {
+                        switch (value) {
+                          case 1:
+                            getMatches().then((String st) {
+                              var temp = MatchPopupItem.fromJsonToList(st);
+                              Navigator.of(context).push(
+                                createRoute(
+                                  EditMatch(math: m, matchPopupItem: temp),
+                                ),
+                              );
+                            });
 
-                          break;
-                        case 2:
-                          Navigator.of(context).push(createRoute(Result(m)));
-                          break;
-                        case 3:
-                          showEditMenu(context, m);
-                          break;
-                        default:
-                      }
-                    },
-                    captureInheritedThemes: false,
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 8.0),
-                          child: new Align(
-                            alignment: Alignment.topLeft,
-                            child: new Padding(
+                            break;
+                          case 2:
+                            Navigator.of(context).push(createRoute(Result(m)));
+                            break;
+                          case 3:
+                            showEditMenu(context, m);
+                            break;
+                          default:
+                        }
+                      },
+                      captureInheritedThemes: false,
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 8.0),
+                            child: new Align(
+                              alignment: Alignment.topLeft,
+                              child: new Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text("${m.homeTeam} - ${m.awayTeam}",
+                                        style: new TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold)),
+                                    Text(" ${m.status}",
+                                        style: new TextStyle(
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
                               padding: const EdgeInsets.only(
-                                  top: 15.0, bottom: 15.0),
-                              child: Row(
+                                  left: 10.0, top: 10.0, bottom: 8.0),
+                              child: Column(
                                 children: <Widget>[
-                                  Text("${m.homeTeam} - ${m.awayTeam}",
+                                  Text(getDate(m.dateBeginning),
                                       style: new TextStyle(
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold)),
-                                  Text(" ${m.status}",
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w400)),
+                                  Text(getDate(m.dateEnd),
                                       style: new TextStyle(
-                                          fontSize: 11.0,
-                                          fontWeight: FontWeight.bold))
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w400))
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10.0, top: 10.0, bottom: 8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Text(getDate(m.dateBeginning),
-                                    style: new TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400)),
-                                Text(getDate(m.dateEnd),
-                                    style: new TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
+                );
+              } else {
+                return Container();
+              }
             },
           ).toList(),
         ),
