@@ -10,6 +10,7 @@ Future<String> loginAsync(String loginStr, String passStr) async {
   // make POST request
   Response response = await post(url, headers: headers, body: json);
   String body = response.body;
+  print(body);
   return body;
 }
 
@@ -46,11 +47,10 @@ Future<String> getPlayers(String id) async {
   return body;
 }
 
-void createMatch(String startDate,String endDate,String matchId,String players) async {
+void createMatch(String json) async {
   // set up POST request arguments
   String url = 'https://acmilan-api-integ.netcosports.com/api/motm/votings';
-  String json =
-      "{\"start_date\":\"$startDate\",\"end_date\":\"$endDate\",\"match_id\":\"$matchId\",\"players\":$players}";
+
   // make POST request
   await post(url,
       headers: {
