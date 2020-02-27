@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class PlayerChackList extends StatefulWidget {
-  List<Line> lines;
-  
+final  List<Line> lines;
+
   PlayerChackList({
     Key key,
     this.lines,
@@ -24,39 +23,45 @@ class _PlayerChackListState extends State<PlayerChackList> {
   List<Line> lines;
   @override
   Widget build(BuildContext context) {
-    return ListView(children: 
-      lines.map(
-          (Line l) => Padding(
-            padding:
-                const EdgeInsets.only(bottom: 20.0, left: 12.0, right: 12.0),
-            child: Row(
-              children: <Widget>[
-                Transform.scale(
-                  scale: 1.4,
-                  child: Checkbox(
-                    activeColor: Colors.blue[600],
-                    onChanged: (bool t) {
-                      l.checked = t;
-                      setState(() {
-                        
-                      });
-                    },
-                    value: l.checked,
-                  ),
+    return ListView(
+        children: lines
+            .map(
+              (Line l) => Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 12.0, right: 12.0),
+                child: Row(
+                  children: <Widget>[
+                    Transform.scale(
+                      scale: 1.4,
+                      child: Checkbox(
+                        activeColor: Colors.blue[600],
+                        onChanged: (bool t) {
+                          int count = 0;
+                          for (var i = 0; i < lines.length; i++) {
+                            if (lines[i].checked) {
+                              count++;
+                            }
+                          }
+                          if (count < 4 || !t) {
+                            l.checked = t;
+                            setState(() {});
+                          }
+                        },
+                        value: l.checked,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        l.text,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                      ),
+                    )
+                  ],
                 ),
-                Expanded(
-                  child: Text(
-                   l.text,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                  ),
-                )
-              ],
-            ),
-          ),
-        )
-        .toList()
-    );
+              ),
+            )
+            .toList());
   }
 }
 
@@ -64,9 +69,10 @@ class Line {
   bool checked;
   String text;
   String id;
-  void change(bool t){
-    checked =t;
+  void change(bool t) {
+    checked = t;
   }
+
   Line({
     this.id,
     this.checked,
