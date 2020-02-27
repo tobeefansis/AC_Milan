@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_test_projeasct/Match.dart';
 
 class Result extends StatefulWidget {
-  Result(this.m) ;
-  Match m;
+  Result(this.m);
+  final Match m;
   @override
   _ResultState createState() => _ResultState();
 }
