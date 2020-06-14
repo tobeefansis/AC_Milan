@@ -87,7 +87,7 @@ class _EditMatchState extends State<EditMatch> {
         isExtended: true,
         icon: Icon(Icons.arrow_forward),
         label: Text('Next'),
-        backgroundColor: Colors.blue[600],
+        backgroundColor: Color.fromARGB(255, 201, 36, 13),
         onPressed: () {
           getPlayers(selectMatch.id).then((String str) {
             var temp = Player.fromJsonToList(str);

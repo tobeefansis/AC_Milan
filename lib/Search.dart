@@ -28,8 +28,8 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Column(
       children: [
         Container(
-          color: Colors.blue[600],
-          padding: EdgeInsets.only(top: 35, bottom: 5),
+          color: Color.fromARGB(255, 201, 36, 13),
+          padding: EdgeInsets.only(top: 40, bottom: 11),
           child: Row(children: [
             BackButton(
               color: Colors.white,

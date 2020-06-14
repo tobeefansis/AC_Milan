@@ -34,7 +34,7 @@ class _PlayerChackListState extends State<PlayerChackList> {
                     Transform.scale(
                       scale: 1.4,
                       child: Checkbox(
-                        activeColor: Colors.blue[600],
+                        activeColor: Color.fromARGB(255, 201, 36, 13),
                         onChanged: (bool t) {
                           int count = 0;
                           for (var i = 0; i < lines.length; i++) {

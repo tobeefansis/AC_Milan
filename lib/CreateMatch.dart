@@ -87,7 +87,7 @@ class _CreateMatchState extends State<CreateMatch> {
         isExtended: true,
         icon: Icon(Icons.arrow_forward),
         label: Text('Next'),
-        backgroundColor: Colors.blue[600],
+        backgroundColor: Color.fromARGB(255, 201, 36, 13),
         onPressed: () {
           getPlayers(selectMatch.id).then((String str) {
             var temp = Player.fromJsonToList(str);
@@ -105,7 +105,7 @@ class _CreateMatchState extends State<CreateMatch> {
       appBar: AppBar(
         title: Row(
           children: <Widget>[
-            Text("Edit"),
+            Text("Create"),
             Text(
               " ${selectMatch.getName()}",
               style: new TextStyle(

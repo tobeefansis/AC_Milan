@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_test_projeasct/Login.dart';
 import 'package:my_test_projeasct/Search.dart';
 import 'CreateMatch.dart';
 import 'Result.dart';
@@ -55,36 +56,8 @@ class _MatchListState extends State<MatchList> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Drawer Header'),
-              decoration: BoxDecoration(color: Colors.blue[600]),
-            ),
-            ListTile(
-              title: Text('Man of the Match'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Fotofan'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Exit'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue[600],
         onPressed: () {
           update();
           getMatches().then((String st) {
@@ -114,13 +87,6 @@ class _MatchListState extends State<MatchList> {
             icon: Icon(Icons.search),
             onPressed: () {
               Navigator.of(context).push(createRoute(Search()));
-              
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.update),
-            onPressed: () {
-              loginAsync("admin", "admin");
             },
           ),
         ],

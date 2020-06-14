@@ -69,11 +69,12 @@ class _SelecctPlayerState extends State<SelecctPlayer> {
         isExtended: true,
         icon: Icon(Icons.check),
         label: Text('Publish'),
-        backgroundColor: Colors.blue[600],
+        backgroundColor:Color.fromARGB(255, 201, 36, 13),
         onPressed: () {
           String t = toJson();
           updateMatch(math.id.toString(), t);
-          Navigator.pushNamed(context, "/");
+          Navigator.pop(context);
+          Navigator.pop(context);
         },
       ),
       appBar: AppBar(

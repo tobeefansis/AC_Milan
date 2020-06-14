@@ -53,21 +53,16 @@ class Login extends StatelessWidget {
               ButtonBar(
                 alignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  RaisedButton(
-                    onPressed: () async {
-                      await Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MatchList()));
-                    },
-                    child: Text('Отмена'),
-                  ),
+                 
                   RaisedButton(
                     onPressed: () {
-                      loginAsync(loginStr, passStr);
-
-                      final snackBar = SnackBar(
-                          content: Text('Вход прошел успешно'),
-                          backgroundColor: Color.fromARGB(255, 61, 194, 54));
-                      Scaffold.of(context).showSnackBar(snackBar);
+                      loginAsync(loginStr, passStr).then((vs) {
+                        if (vs) {
+                          Navigator.of(context).push(
+                            createRoute(MatchList()),
+                          );
+                        } else {}
+                      });
                     },
                     child: Text('Войти'),
                   ),

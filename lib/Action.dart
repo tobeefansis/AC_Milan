@@ -1,17 +1,33 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'Match.dart';
 
-Future<String> loginAsync(String loginStr, String passStr) async {
+String tokenGlobal = "58b2e429f19c592942a36072c44bdfab";
+
+Future<bool> loginAsync(String loginStr, String passStr) async {
   // set up POST request arguments
   String url = 'https://acmilan-api-integ.netcosports.com/api/acmilan/login';
   Map<String, String> headers = {"content-type": "application/json"};
-  String json = "{\"username\":\"$loginStr\",\"password\":\"$passStr\"}";
+  String jsonstr = "{\"username\":\"$loginStr\",\"password\":\"$passStr\"}";
   // make POST request
-  Response response = await post(url, headers: headers, body: json);
+  Response response = await post(url, headers: headers, body: jsonstr);
   String body = response.body;
-  print(body);
-  return body;
+  var t = json.decode(body);
+  String token = t["Token"];
+  bool result = false;
+  if (token != null) {
+    if (token == "123") {
+      tokenGlobal = "58b2e429f19c592942a36072c44bdfab";
+    } else {
+      tokenGlobal = token;
+    }
+    result = true;
+  }
+  print(token);
+  print(tokenGlobal);
+  return result;
 }
 
 void deleteAsync(int id) async {
@@ -20,7 +36,7 @@ void deleteAsync(int id) async {
   // make POST request
   await delete(url, headers: {
     "Content-Type": "application/json",
-    "Token": "58b2e429f19c592942a36072c44bdfab"
+    "Token": tokenGlobal
   });
 }
 
@@ -29,7 +45,7 @@ Future<String> getMatches() async {
   String url = 'https://acmilan-api-integ.netcosports.com/api/motm/games';
   Response response = await get(url, headers: {
     "Content-Type": "application/json",
-    "Token": "58b2e429f19c592942a36072c44bdfab"
+    "Token": tokenGlobal
   });
   String body = response.body;
   return body;
@@ -41,7 +57,7 @@ Future<String> getPlayers(String id) async {
       'https://acmilan-api-integ.netcosports.com/api/motm/games/$id/players';
   Response response = await get(url, headers: {
     "Content-Type": "application/json",
-    "Token": "58b2e429f19c592942a36072c44bdfab"
+    "Token": tokenGlobal
   });
   String body = response.body;
   return body;
@@ -55,7 +71,7 @@ void createMatch(String json) async {
   await post(url,
       headers: {
         "Content-Type": "application/json",
-        "Token": "58b2e429f19c592942a36072c44bdfab"
+        "Token": tokenGlobal
       },
       body: json);
 }
@@ -63,17 +79,17 @@ void createMatch(String json) async {
 void updateMatch(String id, String json) async {
   // set up POST request arguments
   String url = 'https://acmilan-api-integ.netcosports.com/api/motm/votings/$id';
-var t =   await put(url,
+  var t = await put(url,
       headers: {
         "Content-Type": "application/json",
-        "Token": "58b2e429f19c592942a36072c44bdfab"
+        "Token": tokenGlobal
       },
       body: json);
-      print(t.body);
+  print(t.body);
 }
 
 Future<List<Match>> getAsync() async {
-  Map<String, String> headers = {"Token": "58b2e429f19c592942a36072c44bdfab"};
+  Map<String, String> headers = {"Token": tokenGlobal};
   var response = await get(
       'https://acmilan-api-integ.netcosports.com/api/motm/votings',
       headers: headers);
